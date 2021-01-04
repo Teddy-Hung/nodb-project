@@ -1,26 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+/* Core Imports */
+import react, {Component} from 'react'
+import axios from 'axios'
+/* Component Imports */
+import Header from './Components/Header'
+import GetRecipe from './Components/GetRecipe'
+/* Data Imports */
+import GoodRecipes from './Data/GoodRecipes'
+import BadRecipes from './Data/BadRecipes'
+/* CSS Imports */
+import './App.css'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-          <button>Test</button>
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component{
+  constructor(){
+    super()
+
+    this.state = {
+      goodRecipes: GoodRecipes,
+      badRecipes: BadRecipes,
+      savedRecipes: []
+    }
+  }
+  render(){
+    return (
+      <div className="App">
+        <Header />
+        <GetRecipe goodRecipe={this.state.goodRecipes} badRecipe={this.state.badRecipes}/>
+      </div>
+    );
+  }
+
 }
 
 export default App;
