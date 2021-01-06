@@ -6,13 +6,29 @@ class RecipeBook extends Component{
 
         this.state={
             savedRecipes: [],
-            chosenRecipe: {}
+            chosenRecipe: {},
+            toggleEdit: false,
+            userInput: ''
         }
         this.handleRecipeImageClick = this.handleRecipeImageClick.bind(this)
+        this.toggleButton = this.toggleButton.bind(this)
         // this.getSavedRecipes = this.getSavedRecipes.bind(this)
         // this.deleteRecipe = this.deleteRecipe(this)
     }
 
+    handleInput(e){
+        this.setState({userInput: e})
+    }
+    toggleButton(){
+        this.setState({toggleEdit: !this.state.toggleEdit})
+    }
+
+    editName(index){
+        this.toggleButton()
+        let recipes = this.state.savedRecipes.slice()
+        recipes[index].name= this.state.userInput
+        
+    }
     deleteRecipe(index){
         let recipes = this.state.savedRecipes.slice()
         recipes.splice(index, 1)
@@ -40,7 +56,12 @@ class RecipeBook extends Component{
                     <img onClick={() => this.getChosenRecipe(i)} id='recipe-book-img' src= {recipe.imageURL}/>
                     <p id='recipe-book-recipe-name'>{recipe.name}</p>
                     <img onClick={() => this.deleteRecipe(recipe)}/>
-                    <button id='delete-image' onClick={() => this.deleteRecipe(i)}>delete</button>
+                    <section>
+                        <input id='edit-name-input' onChange={(e) => this.handleInput(e.target.value)}></input>
+                        <button id='delete-image' hidden={!this.toggleButton} onClick={() => this.editName(i)}>edit name</button>
+                    </section>
+
+                    <button id='delete-image' onClick={() => this.deleteRecipe(i)}>delete recipe</button>
                 </div>
             })
         // }

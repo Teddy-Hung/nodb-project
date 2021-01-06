@@ -171,7 +171,7 @@
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  border: 4px solid rgb(24, 136, 2);
+  border: 4px solid rgb(2, 98, 136);
   /* display: inline-block; */
   background-color: #282c34;
 }
@@ -182,10 +182,14 @@
 
 #delete-image{
   text-align: center;
-  width:50px
+  width:100px;
 }
 
 #individual-ingredient{
   display: flex;
   flex-direction: row;
+}
+
+#edit-name-input{
+  width:50px;
 }

@@ -14,6 +14,7 @@ class DisplayChosenRecipe extends Component{
         }
         this.toggleEdit = this.toggleEdit.bind(this)
         this.toggleEditIngredient = this.toggleEditIngredient.bind(this)
+        this.test = this.test(this)
         // this.handleEditQuantity = this.handleEditQuantity.bind(this)
     }
  
@@ -32,14 +33,19 @@ class DisplayChosenRecipe extends Component{
         this.setState({quantityInput: e})
     }
     handleEditQuantity(i){
-        this.toggleEditIngredient()
+        // this.toggleEditIngredient()
         let obj = this.state.chosenRecipe
         obj.ingredients[i].quantity = this.state.quantityInput
+        this.setState({chosenRecipe: obj})
     }
 
+    test(i){
+        console.log('mapped i: '+i)
+    }
     render(){
         let ingredients = []
         let steps = []
+        let id = 0
         if(this.props.toggleDecideButton){
           ingredients = this.props.shownRecipe.ingredients.map((ingredients, i) => {
             return <div id='individual-ingredient' key={i}>
@@ -47,12 +53,15 @@ class DisplayChosenRecipe extends Component{
               <input 
                 hidden={!this.state.editButtonEnabled} 
                 placeholder={ingredients.quantity} 
-                onChange={(e) => this.handleEditQuantity(e.target.value)}></input>
+                onChange={(e) => this.handleQuantityChange(e.target.value)}></input>
               <input 
                 hidden={!this.state.editButtonEnabled} 
                 placeholder={ingredients.name} 
-                onChange={(e) => this.handleEditQuantity(e.target.value)}></input>
-              <button hidden={!this.state.editButtonEnabled} onClick={ () => {this.handleEditQuantity(i)}}>Edit</button>
+                onChange={(e) => this.handleQuantityChange(e.target.value)}></input>
+              <button hidden={!this.state.editButtonEnabled} onClick={ () => {
+                  id++
+                  return this.handleEditQuantity(id)
+                  }}>Edit</button>
             </div>
           })
           steps = this.props.shownRecipe.steps.map((step, i) => {
@@ -62,6 +71,7 @@ class DisplayChosenRecipe extends Component{
           })
         //   this.setState({ingredients: ingredients})
         }
+        console.log('TEST ingredients: ', ingredients)
         return(
             <div> 
                 <section>   
