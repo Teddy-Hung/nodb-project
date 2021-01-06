@@ -342,7 +342,7 @@ const data = [
             "Let cool on rack before cutting into squares.",
             "(Make-ahead: Cover and refrigerate for up to 2 days or overwrap with heavy-duty foil and freeze for up to 2 weeks.)"
         ],
-        imageURL: "http://www.canadianliving.com/img/photos/biz/blueberry-oatmeal-squares5801359401371.jpg"
+        imageURL: "https://realhousemoms.com/wp-content/uploads/Blueberry-Oatmeal-Bars-IG.jpg"
     },
     {
         id: 9,

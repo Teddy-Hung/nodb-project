@@ -6,17 +6,18 @@ class GetRecipe extends Component{
 
         this.state = {
             threeRecipes: [],
-            chosenRecipe: []
+            chosenRecipe: {}
         }
 
         this.GetRecipes = this.GetRecipes.bind(this)
+        this.getChosenRecipe = this.getChosenRecipe.bind(this)
     }
     componentDidMount(){
-        this.GetRecipes()
+        // this.GetRecipes()
     }
 
     GetRecipes(){
-        const threeRecipes = [],
+        const recipes = [],
               goodRecipeIndex1 = Math.ceil(Math.random() * this.props.goodRecipe.length-1),
               badRecipeIndex = Math.ceil(Math.random() * this.props.badRecipe.length-1),
               rouletteIndex = Math.ceil(Math.random() * 2)
@@ -24,40 +25,43 @@ class GetRecipe extends Component{
 
         //Duplicate recipe index check
         while(goodRecipeIndex2 === goodRecipeIndex1){
-            console.log('duplicate detected, reassigning index2')
-            goodRecipeIndex2 = Math.ceil(Math.random() * this.props.goodRecipe.length)
+            // console.log('duplicate detected, reassigning index2')
+            goodRecipeIndex2 = Math.ceil(Math.random() * this.props.goodRecipe.length-1)
         }
-        console.log(`index1: ${goodRecipeIndex1} index2: ${goodRecipeIndex2} index3: ${badRecipeIndex}`)
+        recipes.push(this.props.goodRecipe[goodRecipeIndex1])
+        recipes.push(this.props.goodRecipe[goodRecipeIndex2])
+        recipes.push(this.props.badRecipe[badRecipeIndex])
+        // console.log('recipes: '+ JSON.stringify(recipes))
+        this.setState({threeRecipes: recipes})
+        // console.log(recipes[rouletteIndex])
+        this.setState({chosenRecipe: recipes[rouletteIndex]})
+        // console.log(this.state.chosenRecipe)
+    }
 
-        threeRecipes.push(this.props.goodRecipe[goodRecipeIndex1])
-        threeRecipes.push(this.props.goodRecipe[goodRecipeIndex2])
-        threeRecipes.push(this.props.goodRecipe[badRecipeIndex])
-
-        this.setState({threeRecipes: threeRecipes, chosenRecipe: threeRecipes[rouletteIndex]})
+    getChosenRecipe(){
+        return this.state.chosenRecipe
     }
 
     render(){
-        // let recipes = this.state.threeRecipes.map()
-        console.log(this.state.threeRecipes[0].name)
+        let recipes = this.state.threeRecipes.map((recipe, i) => {
+            // console.log(this.state.chosenRecipe)
+            //Borders the image and name in red for bad recipe
+            if(i === 2){
+                return <div key={i} className='Roulette-Recipe'>
+                    <img id='recipe-img-bad' src= {recipe.imageURL}/>
+                    <p id='recipe-name-bad'>{recipe.name}</p>
+                </div> 
+            }else{
+                return <div key={i} className='Roulette-Recipe'>
+                    <img id='recipe-img' src= {recipe.imageURL}/>
+                    <p>{recipe.name}</p>
+                </div>
+            }
+        })
         return(
-            <div className= 'Recipe-Roulette-section'>
-                <section className= 'Recipe-Box'>
-                    <section className= 'Recipe-1'>
-                        {/* <img src= {this.state.threeRecipes[0].imageURL}/> */}
-                        <span className= 'recipeName'></span>
-                    </section>
-                    <section className= 'Recipe-2'>
-                        <span className= 'recipePicture'></span>
-                        <span className= 'recipeName'></span>
-                    </section>
-                    <section className= 'Recipe-3'>
-                        <span className= 'recipePicture'></span>
-                        <span className= 'recipeName'></span>
-                    </section>
-                </section>
-                <button>Decide My Fate</button>
+            <div className= 'Recipe-Roulette-Box'>
+                <section className= 'Three-Recipes-Display'>{recipes}</section>
                 <button onClick = {this.GetRecipes}>Spin the Recipe Roulette!</button>
-
             </div>
         )
     }
