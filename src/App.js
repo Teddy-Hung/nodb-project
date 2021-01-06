@@ -22,61 +22,29 @@ class App extends Component{
       toggleDecideButton: false
     }
     this.handleDecideClick = this.handleDecideClick.bind(this)
+    this.getSavedRecipes = this.getSavedRecipes.bind(this)
   }
 
-  componentDidMount(){
-    // this.setState({shownRecipe: this.refs.getRecipeRef.getChosenRecipe()})
+  getSavedRecipes(){
+    this.setState({savedRecipes: this.refs.recipeBookRef.savedRecipes})
   }
 
   handleDecideClick(){
     let obj = this.refs.getRecipeRef.getChosenRecipe()
     this.setState({shownRecipe: obj})
     this.setState({toggleDecideButton: true})
-    console.log(JSON.stringify(this.state.shownRecipe))
+    console.log('shown recipe in app is: '+JSON.stringify(this.state.shownRecipe))
   }
 
   render(){
-    let ingredients = []
-    let steps = []
-    if(this.state.toggleDecideButton){
-      ingredients = this.state.shownRecipe.ingredients.map((ingredients, i) => {
-        return <div key={i}>
-          <li>{`${ingredients.quantity} of ${ingredients.name}`}</li>
-        </div>
-      })
-      steps = this.state.shownRecipe.steps.map((step, i) => {
-        return <div key={i}>
-          <li>{step}</li>
-        </div>
-      })
-    }
-
     return (
       <div className="App">
         <Header />
         <section className = 'Three-Recipe-Box'>
           <GetRecipe ref='getRecipeRef' goodRecipe={this.state.goodRecipes} badRecipe={this.state.badRecipes}/>
         </section>
-        <section>
-          <button id='pickRandomButton' onClick={this.handleDecideClick}>Pick a random recipe</button>
-        </section>
-        <section className='DisplayChosenRecipe' >
-          <section className='Top-Section'>
-            <section id='chosen-recipe-name-image-box'>
-              <h1>{this.state.shownRecipe.name}</h1>
-              <img hidden={!this.state.toggleDecideButton} id='shown-recipe-image' src={this.state.shownRecipe.imageURL}/>
-            </section>
-            <section id='chosen-recipe-ingredients-box' >
-              <h1 hidden={!this.state.toggleDecideButton}>Ingredients</h1>
-              <ul>{ingredients}</ul>
-            </section>
-          </section>
-          <section className='Bottom-Section'>
-            <h1 hidden={!this.state.toggleDecideButton}>Steps</h1>
-            <ol>{steps}</ol>
-          </section>
-
-        </section>
+        <DisplayChosenRecipe ref='displayRecipeRef' handleClickFn={this.handleDecideClick} shownRecipe={this.state.shownRecipe} toggleDecideButton={this.state.toggleDecideButton}/>
+        {/* <RecipeBook ref='recipeBookRef' chosenRecipe={this.state.shownRecipe} savedRecipes={this.state.savedRecipes}/> */}
       </div>
     );
   }

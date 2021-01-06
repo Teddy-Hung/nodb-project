@@ -147,7 +147,7 @@ const data = [
     },
     {
         id: 5,
-        name: "Cranberry and Apple Stuffed Acorn Squash Recipe",
+        name: "Cranberry and Apple Stuffed Acorn Squash",
         ingredients: [
             {
                 quantity: "2",

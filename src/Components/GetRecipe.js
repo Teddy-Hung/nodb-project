@@ -18,15 +18,15 @@ class GetRecipe extends Component{
 
     GetRecipes(){
         const recipes = [],
-              goodRecipeIndex1 = Math.ceil(Math.random() * this.props.goodRecipe.length-1),
-              badRecipeIndex = Math.ceil(Math.random() * this.props.badRecipe.length-1),
-              rouletteIndex = Math.ceil(Math.random() * 2)
-        let goodRecipeIndex2 = Math.ceil(Math.random() * this.props.goodRecipe.length-1)
+              goodRecipeIndex1 = Math.floor(Math.random() * this.props.goodRecipe.length),
+              badRecipeIndex = Math.floor(Math.random() * this.props.badRecipe.length),
+              rouletteIndex = Math.floor(Math.random() * 3)
+        let goodRecipeIndex2 = Math.floor(Math.random() * this.props.goodRecipe.length)
 
         //Duplicate recipe index check
         while(goodRecipeIndex2 === goodRecipeIndex1){
             // console.log('duplicate detected, reassigning index2')
-            goodRecipeIndex2 = Math.ceil(Math.random() * this.props.goodRecipe.length-1)
+            goodRecipeIndex2 = Math.floor(Math.random() * this.props.goodRecipe.length)
         }
         recipes.push(this.props.goodRecipe[goodRecipeIndex1])
         recipes.push(this.props.goodRecipe[goodRecipeIndex2])
